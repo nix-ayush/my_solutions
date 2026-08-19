@@ -4,9 +4,13 @@
 #include <vector>
 
 class Solution {
+private:
+  std::string buzz_me(const int &num);
+
 public:
   std::vector<std::string> fizzBuzz(int n) {
     std::vector<std::string> fbuzz;
+    fbuzz.reserve(n);
 
     for (int x = 1; x <= n; x++) {
       fbuzz.push_back(buzz_me(x));
@@ -14,24 +18,23 @@ public:
 
     return fbuzz;
   }
-
-private:
-  std::string buzz_me(const int &num) {
-    std::string output{};
-
-    if (num % 15 == 0) {
-      output = "FizzBuzz";
-    } else if (num % 3 == 0) {
-      output = "Fizz";
-    } else if (num % 5 == 0) {
-      output = "Buzz";
-    } else {
-      output = std::to_string(num);
-    }
-
-    return output;
-  }
 };
+
+std::string Solution::buzz_me(const int &num) {
+  std::string output{};
+
+  if (num % 15 == 0) {
+    output = "FizzBuzz";
+  } else if (num % 3 == 0) {
+    output = "Fizz";
+  } else if (num % 5 == 0) {
+    output = "Buzz";
+  } else {
+    output = std::to_string(num);
+  }
+
+  return output;
+}
 
 #ifdef ONLINE_JUDGE
 #include <iostream>
