@@ -84,6 +84,24 @@ public:
     **/
   }
 
+  /** After brainstorming above, I actually want to make the whole array
+      on stack, without crashing? How do I do it?
+
+      # removes stack limit(default stack limti check with: ulimit -s)
+      ulimit -s unlimited
+      # then inside the same shell run the binary i.e. ./stack_vs_heap
+  **/
+
+  // for this function to run: stack size need to be minimum 40MB
+  void stack_stride() {
+    int the_stack[SIZE];
+    // Touch only 1 int every 4KB page (1024 ints), walking downward
+    // 10,000,000*4 bytes = 40,000,000bytes ~= 38.15MB
+    for (int i = SIZE - 1; i >= 0; i -= 1024) {
+      the_stack[i] = 1;
+    }
+  }
+
   void reservedHeap() {
     std::vector<int> the_heap;
     the_heap.reserve(SIZE);
@@ -120,6 +138,7 @@ int main() {
   profiling("Allocator::reservedHeapPushedBack",
             &Allocator::reservedHeapPushedBack, hey);
   profiling("Allocator::stack", &Allocator::stack, hey);
+  profiling("Allocator::stack_stride", &Allocator::stack_stride, hey);
 
   return 0;
 }
